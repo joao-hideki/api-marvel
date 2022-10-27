@@ -1,9 +1,10 @@
-import {Container, Navbar, List, Loading, Pagination} from './style';
+import {Container, Navbar, List, Loading, Pagination, InputMobile} from './style';
 import { useEffect, useState } from 'react';
 import md5 from 'md5';
 import { CharacterCard } from '../../components/CharacterCard/index';
 import { Footer } from '../../components/Footer/index';
 import { MagnifyingGlass } from  'react-loader-spinner';
+import {BsSearch} from 'react-icons/bs';
 
 
 const publicKey = 'e0ae25b179b9a1b68538004b8bacc5fd';
@@ -64,60 +65,61 @@ export const Characters = () => {
 
 
     return(
-      <>
-        
         <Container>
-        <Navbar>
-          <img src='https://seeklogo.com/images/M/Marvel_Comics-logo-D489AEB9C1-seeklogo.com.png'/>
-          <input
-            type='text'
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}         
-          />                    
-        </Navbar>    
-        {loading && 
-          <Loading>
-            <MagnifyingGlass
-              visible={true}
-              height="20%"
-              width="20%"
-              ariaLabel="MagnifyingGlass-loading"
-              wrapperStyle={{}}
-              wrapperClass="MagnifyingGlass-wrapper"
-              glassColor = '#c0efff'
-              color = '#e15b64'
-            />
-          </Loading>
-        } 
-        {!loading &&
-          <List>
-          {characters.map(({id, thumbnail, name}) => {
-            return(
-              <CharacterCard 
-                key={id} 
-                image={`${thumbnail.path}.${thumbnail.extension}`} 
-                name={name}
+          <Navbar>
+            <img src='https://seeklogo.com/images/M/Marvel_Comics-logo-D489AEB9C1-seeklogo.com.png'/>
+            <input
+              type='text'
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}     
+              placeholder='Digite o nome do personagem'    
+            />  
+            <InputMobile>
+              <BsSearch/>
+            </InputMobile>                  
+          </Navbar>    
+          {loading && 
+            <Loading>
+              <MagnifyingGlass
+                visible={true}
+                height="20%"
+                width="20%"
+                ariaLabel="MagnifyingGlass-loading"
+                wrapperStyle={{}}
+                wrapperClass="MagnifyingGlass-wrapper"
+                glassColor = '#c0efff'
+                color = '#e15b64'
               />
-            );
-          })}          
-        </List>
-        }
-        <Pagination>
-          <button onClick={comeBackPage}> ⬅️ </button>
-          <input 
-            type='number'
-            value={countPage ? countPage : setCountPage(1)}
-            onChange={(e) => {setCountPage(parseInt(e.target.value))}}
-            min={1}
-            max={44}
-            placeholder='1 - 44'
-          />
-          <button onClick={skipPage}> ➡️ </button>
-          <p>máx 44</p>
-        </Pagination>
-        <Footer/>  
+            </Loading>
+          } 
+          {!loading &&
+            <List>
+              {characters.map(({id, thumbnail, name}) => {
+                return(
+                  <CharacterCard 
+                    key={id} 
+                    image={`${thumbnail.path}.${thumbnail.extension}`} 
+                    name={name}
+                  />
+                );
+              })}          
+            </List>
+          }
+          <Pagination>
+            <button onClick={comeBackPage}> ⬅️ </button>
+            <input 
+              type='number'
+              value={countPage ? countPage : setCountPage(1)}
+              onChange={(e) => {setCountPage(parseInt(e.target.value))}}
+              min={1}
+              max={44}
+              placeholder='1 - 44'
+            />
+            <button onClick={skipPage}> ➡️ </button>
+          </Pagination>
+          <Footer/>  
       </Container>
-      </>
-      
     );
 }
+
+//<p>máx 44</p>
